@@ -2,10 +2,16 @@
 node_modules
 /dist
 
+# Node dependencies
+node_modules
+
 
 # local env files
 .env.local
 .env.*.local
+.history
+package.json
+yarn.lock
 
 # Log files
 npm-debug.log*
