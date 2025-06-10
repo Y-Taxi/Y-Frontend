@@ -2,7 +2,7 @@
     <div>
       <div>
         <img alt="Vue logo" src="@/assets/YtaxiLogo.png">
-        <h2>로그인</h2>
+        <h2>테스트입니다.</h2>
         <div id="loginForm"> 
             <p>
               <input class="w3-input" name="uid" placeholder="ID를 입력해주세요" ><br>
