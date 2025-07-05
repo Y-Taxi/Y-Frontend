@@ -1,5 +1,11 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 //import App from './App.vue'
-import LoginView from './view/LoginView.vue'
+import MainView from './view/MainView.vue';
+import router from './router';
+//import store from "./store";
+import axios from "axios";
 
-createApp(LoginView).mount('#app')
+axios.defaults.baseURL = "http://localhost:8083";
+const app = createApp(MainView);
+app.config.globalProperties.axios = axios;
+app.use(router).mount("#app");
