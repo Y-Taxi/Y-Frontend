@@ -36,11 +36,6 @@
         };
       },
       methods: {
-        test(){
-          axios.get("/test").then((res) => {
-            this.connectData = res.data;
-          })
-        },
         inputLgoinId(e){
           return this.loginId = e.target.value;
         },
@@ -48,10 +43,17 @@
           return this.pw = e.target.value;
         },
         login(){
-          axios.post("/login/loginResult", {"loginId":this.loginId, "pw":this.pw}).then((res) => {
-            this.connectData = res.data;
+          axios.post("/login?username="+this.loginId+"&password="+this.pw).then((res) => {
+            //this.connectData = res.data;
+            console.log(res);
+
+            if (res.status == 200) {
+              this.$router.push('/'); //홈 페이지로 이동
+            }else{
+              alert("아이디 또는 비밀번호가 틀렸습니다.");
+            }
           })
-        }
+        },
       },
     }
  </script>
