@@ -44,7 +44,7 @@ const userJoin = async () => {
 <template>
 <div>
     <div>
-        <h2>회원가입11</h2>
+        <h2>회원가입</h2>
         <div id="joinUserForm"> 
             <p>
                 <input v-model="userId" name="uid" class="w3-input" placeholder="아이디를 입력해주세요"><br>
