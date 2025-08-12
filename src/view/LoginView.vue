@@ -1,3 +1,43 @@
+<script>
+    import axios from 'axios';
+    import tokenConfig from '@/composables/token-config';
+
+    export default {
+      name:"LoginView",
+      components: [],
+      data() {
+        return{
+          connectData: "",
+          loginId:"",
+          pw:""
+        };
+      },
+      methods: {
+        inputLgoinId(e){
+          return this.loginId = e.target.value;
+        },
+        inputPw(e){
+          return this.pw = e.target.value;
+        },
+        login(){
+          axios.post("/login?username="+this.loginId+"&password="+this.pw).then((res) => {
+            //this.connectData = res.data;
+            if (res.status == 200) {
+              console.log(res.headers["refresh-token"]);
+
+              tokenConfig.setToken(res.headers['authorization']);
+              tokenConfig.setRefreshToken(res.headers['refresh-token']);
+
+              this.$router.push('/'); //홈 페이지로 이동
+            }else{
+              alert("아이디 또는 비밀번호가 틀렸습니다.");
+            }
+          })
+        },
+      },
+    }
+</script>
+
 <template>
     <div>
       <div>
@@ -21,39 +61,3 @@
       </div>
     </div>
   </template>
-
-  <script>
-    import axios from 'axios';
-
-    export default {
-      name:"LoginView",
-      components: [],
-      data() {
-        return{
-          connectData: "",
-          loginId:"",
-          pw:""
-        };
-      },
-      methods: {
-        inputLgoinId(e){
-          return this.loginId = e.target.value;
-        },
-        inputPw(e){
-          return this.pw = e.target.value;
-        },
-        login(){
-          axios.post("/login?username="+this.loginId+"&password="+this.pw).then((res) => {
-            //this.connectData = res.data;
-            console.log(res);
-
-            if (res.status == 200) {
-              this.$router.push('/'); //홈 페이지로 이동
-            }else{
-              alert("아이디 또는 비밀번호가 틀렸습니다.");
-            }
-          })
-        },
-      },
-    }
- </script>

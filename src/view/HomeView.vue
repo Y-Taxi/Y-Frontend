@@ -21,7 +21,8 @@
         <div id="main" style="width: 100%; min-width: 350px; min-height: 550px; margin-left: 10px; box-sizing: border-box;">
           <div style="border: 1px solid; width: 100%; min-height: 550px;">
               <main style="padding: 10px;">
-                <h2>메인페이지</h2> 
+                <h2>메인페이지</h2>
+                <button @click="test">테스트</button>
               </main>
           </div>
         </div>
@@ -36,9 +37,17 @@
   </template>
 
   <script>
+    import axiosY from '@/composables/axios_interceptor';
+    //import axios from 'axios';
+
     export default {
       methods: {
-        
+        test(){
+          axiosY.post("/test").then((res) => {
+            //this.connectData = res.data;
+            console.log(res);
+          })
+        },
       }
     }
  </script>
