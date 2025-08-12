@@ -51,7 +51,7 @@ axiosY.interceptors.response.use(
       if (error.response?.headers["expires"] == 0){
         console.log(">>>>>>>>refreshToken get>>>>>>>>>>");
 
-        await tokenConfig.tokenRefresh(function(reToken){
+        await tokenConfig.tokenRefresh(async function(reToken){
           newToken = reToken;
 
           console.log(">>>newToken: " + newToken);
@@ -71,7 +71,9 @@ axiosY.interceptors.response.use(
           };
 
           // 중단된 요청을(에러난 요청)을 토큰 갱신 후 재요청
-          return axiosY(error.config);
+          const res = await axiosY(error.config);
+          console.log(res);
+          return res;
         });
       }else{
         return Promise.reject(error);
