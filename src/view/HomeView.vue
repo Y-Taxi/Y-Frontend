@@ -45,6 +45,7 @@
         test(){
           axiosY.post("/test").then((res) => {
             //this.connectData = res.data;
+            console.log(">>>>>then");
             console.log(res);
           })
         },

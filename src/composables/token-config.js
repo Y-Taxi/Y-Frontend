@@ -34,21 +34,21 @@ const tokenConfig = {
             }
         });
     },
-    tokenRefresh(callbackFun){
+    tokenRefresh(){
         let refreshToken = cookies.get('Refresh-Token');
 
-        axios.post("/token/tokenRefresh", {"refreshToken":refreshToken}).then((res) => {
+        return axios.post("/token/tokenRefresh", {"refreshToken":refreshToken}).then((res) => {
             console.log(">>>tokenRefresh: " + res.data)
             if(res.data != null){
                 let token = res.data;
 
                 this.setToken(token);
 
-                callbackFun(token);
+                return token;
             }
         }).catch(function(){
             //refreshToken 만료, 로그아웃
-            callbackFun(null);
+            return null;
         });
     }
 };

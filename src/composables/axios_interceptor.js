@@ -16,8 +16,6 @@ axiosY.interceptors.request.use(
     // getToken() - 클라이언트에 저장되어 있는 액세스 토큰을 가져오는 함수
     const accessToken = tokenConfig.getToken();
 
-    console.log(">>accessToken>> " + accessToken);
-
     config.headers['Content-Type'] = 'application/json';
     config.headers['Authorization'] = accessToken;
 
@@ -51,30 +49,26 @@ axiosY.interceptors.response.use(
       if (error.response?.headers["expires"] == 0){
         console.log(">>>>>>>>refreshToken get>>>>>>>>>>");
 
-        await tokenConfig.tokenRefresh(async function(reToken){
-          newToken = reToken;
+        newToken = await tokenConfig.tokenRefresh();
 
-          console.log(">>>newToken: " + newToken);
+        console.log(">>>newToken: " + newToken);
 
-          if(newToken == null){
-            console.log(">>>>>>>>refreshToken get Fail>>>>>>>>>>");
-            return Promise.reject(error);
-          }
+        if(newToken == null){
+          console.log(">>>>>>>>refreshToken get Fail>>>>>>>>>>");
+          return Promise.reject(error);
+        }
 
-          console.log(">>>>>>>>refreshToken get Success>>>>>>>>>>");
+        console.log(">>>>>>>>refreshToken get Success>>>>>>>>>>");
 
-          const accessToken = newToken;
+        const accessToken = newToken;
 
-          error.config.headers = {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          };
+        error.config.headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        };
 
-          // 중단된 요청을(에러난 요청)을 토큰 갱신 후 재요청
-          const res = await axiosY(error.config);
-          console.log(res);
-          return res;
-        });
+        // 중단된 요청을(에러난 요청)을 토큰 갱신 후 재요청
+        return await axiosY(error.config);
       }else{
         return Promise.reject(error);
       }
