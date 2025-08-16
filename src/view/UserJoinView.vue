@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { ref, computed } from 'vue'
 
+
 /** 상태 */
 const connectData = ref('')
 const isLoading = ref(false)
@@ -54,7 +55,6 @@ const userJoin = async () => {
       userBirth: birth.value,
       userGender: gender.value,
       userPhone: userPhone.value,
-      // 아래 3개는 백엔드 스펙에 맞게 쓰세요(없으면 제거)
       userEmail: email.value,
     })
     connectData.value = '회원가입 성공: ' + JSON.stringify(data)
@@ -65,6 +65,28 @@ const userJoin = async () => {
     isLoading.value = false
   }
 }
+
+// 주소 조회
+const openAddress = () => {
+  if (!window.daum || !window.daum.Postcode) {
+    alert('주소 검색 모듈이 아직 로드되지 않았습니다.')
+    return
+  }
+
+  new window.daum.Postcode({
+    oncomplete: (data) => {
+      zipCode.value = data.zonecode
+      address.value = data.roadAddress || data.jibunAddress
+      // 상세주소에 자동 포커스 이동
+      setTimeout(() => {
+        const input = document.querySelector('input[type="subAddress"]')
+        input?.focus()
+      }, 10)
+    },
+  }).open()
+}
+
+
 </script>
 
 <template>
@@ -130,7 +152,7 @@ const userJoin = async () => {
           <div class="control">
             <div class="addr">
               <input class="input zip" type="zipCode" v-model="zipCode" placeholder="우편번호" />
-              <button type="button" class="btn small">우편번호 검색</button>
+              <button type="button" class="btn small" @click="openAddress">우편번호 검색</button>
             </div>
             <input class="input mt8" type="address" v-model="address" placeholder=""/>
             <input class="input mt8" type="subAddress" v-model="subAddress" placeholder="상세주소" />
