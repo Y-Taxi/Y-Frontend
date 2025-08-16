@@ -66,7 +66,6 @@ const userJoin = async () => {
   }
 }
 
-// 원복
 // 주소 조회 모달
 const openAddress = () => {
   if (!window.daum || !window.daum.Postcode) {
