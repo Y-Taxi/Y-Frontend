@@ -66,7 +66,7 @@ const userJoin = async () => {
   }
 }
 
-// 주소 조회
+// 주소 조회 모달
 const openAddress = () => {
   if (!window.daum || !window.daum.Postcode) {
     alert('주소 검색 모듈이 아직 로드되지 않았습니다.')
